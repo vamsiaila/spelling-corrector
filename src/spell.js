@@ -6,7 +6,7 @@ var spellCorrector = function() {
     this.alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
 }
 
-spellCorrector.prototype.loadDictionary = function(dictPath) {
+spellCorrector.prototype.loadDictionary = function(dictPath, loadCustom, customPath) {
     dictPath = dictPath || __dirname + '/big.txt';
     var file = fs.readFileSync(dictPath).toString().toLowerCase();
     var regex = /[a-z]+/g;
@@ -18,6 +18,9 @@ spellCorrector.prototype.loadDictionary = function(dictPath) {
             newCount = newCount + this.nWords.get(word);
         }
         this.nWords.set(word, newCount);
+    }
+    if(loadCustom) {
+        spellCorrector.prototype.loadDictionary(customPath, false);
     }
 }
 
